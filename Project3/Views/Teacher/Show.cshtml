@@ -1,0 +1,59 @@
+﻿
+
+@model Project3.Models.Teacher
+
+@{
+    ViewBag.Title = "Show";
+}
+
+<h2>Here is information about a teacher</h2>
+
+<a class="nav" href="/Teacher/List"> &larr; back to Teachers</a>
+
+<div id="display-container">
+
+   <h2>@Model.TeacherFname @Model.TeacherLname </h2>
+    
+  
+        <p>Salary:<span> @Model.TeacherSalary </span></p>
+
+        <p>Hire Date:<span> @Model.TeacherHireDate </span></p>
+   
+
+</div>
+
+
+<style>
+    #display-container {
+        background-color: #74c69d;
+        padding: 20px;
+        border-radius: 12px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav {
+     font-size: 14px;
+    }
+
+    h2 {
+        font-size: 30px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #1b4332;
+    }
+
+    p {
+        font-size: 20px;
+    }
+
+    span {
+        font-size: 20px;
+        font-weight: bold;
+        color: #1b4332;
+    }
+ 
+
+</style>

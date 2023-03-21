@@ -1,0 +1,92 @@
+﻿
+@model IEnumerable<Project3.Models.Teacher>
+
+@{
+    ViewBag.Title = "List";
+}
+<div class="title-container">
+<h1>Please enter the name you are searching for</h1>
+
+<form class="search-bar" action="/Teacher/List" method="GET">
+      <div class="input-container">
+    <input class="search-input"type="text" name="SearchKey"/>
+    <input class="search-btn" type="submit" value="Search" />
+          </div>
+</form>
+  
+<h2 class="title">List of our teachers</h2>
+</div>
+@foreach(var teacher in Model)
+            {
+    <div class="list-container">
+    <div class="list-teachers">
+    <a href="/Teacher/Show/@teacher.TeacherId">@teacher.TeacherFname @teacher.TeacherLname </a>
+    </div>
+    </div>
+
+            }
+
+<style>
+
+    .title-container {
+        background-color: #d8f3dc;
+        border-radius: 12px;
+        margin-top: 80px;
+   
+    }
+
+    h1 { 
+        font-size: 20px;
+    }
+
+    .title {
+        font-size: 20px;
+        padding: 20px 100px;
+        font-weight: bold;
+        font-size: 24px;
+        background-color: #74c69d;
+        border-radius: 12px;
+        margin-top: 80px;
+        color: #1b4332;
+        margin-top: 80px;
+        text-align: center;
+    }
+    form {
+        margin-top: 20px;
+    }
+
+    .input-container {
+        display: flex;
+        gap: 10px;
+    }
+    .search-input {
+        padding: 10px;
+        border-radius: 6px;
+        background-color: #95d5b2;
+        border-color: #95d5b2;
+    }
+
+    .search-btn {
+        border-radius: 6px;
+        padding: 10px 20px;
+        background-color: #ef233c;
+        font-size: 18px;
+        border-color: #ef233c;
+        font-weight: bold;
+        letter-spacing: 2px;
+        color: #fff;
+    }
+    .list-container {
+        padding: 20px;
+        background-color: red;
+        border-radius: 12px;
+        background-color: #b7e4c7;
+        margin-top: 10px;
+    }
+    .list-teachers {
+        line-height: 30px;
+        font-size: 20px;
+  
+    
+    }
+</style>
