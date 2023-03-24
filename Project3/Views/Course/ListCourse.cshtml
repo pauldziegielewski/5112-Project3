@@ -1,0 +1,41 @@
+﻿
+@model IEnumerable<Project3.Models.Course>
+@{
+    ViewBag.Title = "List Course";
+}
+
+<h2>List of courses</h2>
+
+
+@foreach(var course in Model)
+            {
+    <div class="course-display"><p class="course-code">@course.ClassCode</p> <p class="class-name">@course.ClassName </p></div>
+            }
+
+
+<style>
+
+    h2 {
+        font-size: 30px;
+        color: #1b4332;
+    }
+    .course-display {
+        background: #74c69d;
+        display:flex;
+        gap: 30px;
+        align-items: center;
+
+
+    }
+
+    .class-name {
+        font-size: 20px;
+        color: #1b4332;
+    }
+
+    .course-code {
+        font-weight: bold;
+        color: #1b4332;
+    }
+
+</style>

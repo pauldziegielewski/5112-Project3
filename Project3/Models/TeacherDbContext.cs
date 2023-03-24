@@ -7,11 +7,11 @@ using MySql.Data.MySqlClient;
 
 namespace Project3.Models
 {
-    //this class will store the information retuired in order to access the database
+    //this class will store the information retured in order to access the database
     public class TeacherDbContext
     {
         /// <summary>
-        /// Returns a connection to the teacher database
+        /// Returns a connection to the Blog database
         /// </summary>
         /// <example>private TeacherDbContext Blog = new TeacherDbContext()
         /// MySqlConnection Conn = Blog.AccessDatabase()</example>
@@ -38,12 +38,13 @@ namespace Project3.Models
         //This is the only method in this class (TeacherDbContext)
         //This method is public = it can be accessed by any controller which exists in the webserver
         //an object = an instantiation of a class
+        // "MySqlConnection" is a class that connects MySQL database to .NET
         public MySqlConnection AccessDatabase()
         {
             //We are instantiating the MySqlConnection Class to create an object
-            //The object is a specific connetion to our teacher database on port 3306 of localhost
-            // CLASS/Model = humans
-            // OBJECT = human
+            //The object is a specific connetion to the BLOG database on port 3306 of localhost
+            // CLASS/Model = humans (Metaphor)
+            // OBJECT = human (Metaphor)
             // Class ==> Object ==> Method
             return new MySqlConnection(ConnectionString);
         }

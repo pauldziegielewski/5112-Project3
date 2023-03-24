@@ -9,12 +9,15 @@ using MySql.Data.MySqlClient;
 using System.Security.Cryptography;
 using System.CodeDom.Compiler;
 using Mysqlx.Resultset;
+using System.Xml.XPath;
 
 namespace Project3.Controllers
 {
+        //This controller will listen for HTTP requests
+        //This controller is connected to "TeacherDbContext", which has access to the Blog Database
     public class TeacherDataController : ApiController
     {
-
+       // Here "Blog" is an object that represents an instance of the "BlogDbContext" class
         private TeacherDbContext Blog = new TeacherDbContext();
       
         /// <summary>
@@ -22,6 +25,7 @@ namespace Project3.Controllers
         /// </summary>
         /// <example>GET api/TeacherData/ListTeachers</example>
         /// <returns>A list of teacher first and last names</returns>
+    
         [HttpGet]
         [Route("api/TeacherData/ListTeachers/{SearchKey?}")]
 
@@ -39,7 +43,7 @@ namespace Project3.Controllers
             // STEP 3 - Obtain a new query for teacher database
             MySqlCommand cmd = Conn.CreateCommand();
 
-            // STEP 4 - SQL Query (DO I NEED AMNOTHER COMMANDTEXT TO SEARCH FOR SALARY, HIRE DATE?), WHAT DOES SITE.CSS/_LAYOUT.CSHTML CHANGE?
+            // STEP 4 
             cmd.CommandText = "Select * from Teachers where lower(teacherfname) like lower (@key) or lower (teacherlname) like lower(@key) or (concat (teacherfname, ' ', teacherlname)) like lower(@key)";
 
             cmd.Parameters.AddWithValue("@key", "%" + SearchKey + "%");
@@ -81,9 +85,6 @@ namespace Project3.Controllers
 
         }
 
-
-
-
         /// <summary>
         /// Returns a teacher name base on an associated teacher I.D. that is specified by user
         /// </summary>
@@ -95,9 +96,9 @@ namespace Project3.Controllers
         /// <returns>Hire Date = "2016-08-05"</returns>
         /// <returns>Salary = 55.30</returns>
         [HttpGet]
-        [Route("api/TeacherData/FindTeacher/{id}")]
+        [Route("api/TeacherData/FindTeacher/{teacherid}")]
         //FindTeacher() METHOD
-        public Teacher FindTeacher(int id)
+        public Teacher FindTeacher(int teacherid)
         {
             Teacher NewTeacher = new Teacher();
 
@@ -107,8 +108,11 @@ namespace Project3.Controllers
 
             MySqlCommand cmd = Conn.CreateCommand();
 
-            cmd.CommandText = "Select * from Teachers where teacherid = " + id;
+            cmd.CommandText = "Select * from Teachers where teacherid =@id";
 
+            cmd.Parameters.AddWithValue("@id", teacherid);
+            cmd.Prepare();
+          
             MySqlDataReader ResultSet = cmd.ExecuteReader();
 
            
@@ -131,5 +135,51 @@ namespace Project3.Controllers
 
             return NewTeacher;
         }
+
+
+
+        /// <summary>
+        /// Returns a list of courses from the blog database
+        /// </summary>
+        /// <returns>coursecode, coursename</returns>
+        /// <example>http5101, Web Application Development</example>
+        [HttpGet]
+        [Route("api/TeacherData/ListClasses")]
+        public IEnumerable<Course> ListClasses()
+        {
+
+         
+            MySqlConnection Conn = Blog.AccessDatabase();
+
+            Conn.Open();
+
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            cmd.CommandText = "Select * from Classes join Teachers on Classes.teacherid = Teachers.teacherid";
+
+            MySqlDataReader ResultSet = cmd.ExecuteReader();
+
+            List<Course> ClassesTaught = new List<Course>();
+
+            while (ResultSet.Read())
+            {
+                int ClassId = (int)ResultSet["classid"];
+                string ClassCode = (string)ResultSet["classcode"];
+                string ClassName = (string)ResultSet["classname"];
+
+                Course NewClassesTaught = new Course();
+
+                NewClassesTaught.ClassId = ClassId;
+                NewClassesTaught.ClassCode= ClassCode;
+                NewClassesTaught.ClassName= ClassName;
+
+                ClassesTaught.Add(NewClassesTaught);
+            }
+            Conn.Close();
+
+            return ClassesTaught;
+        }
+
+
     }
 }

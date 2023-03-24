@@ -2,14 +2,14 @@
     padding-top: 50px;
     padding-bottom: 20px;
     background-color: #d8f3dc;
-    color: red;
+    color: darkslateblue;
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
-    color: red;
+    color: darkslateblue;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
@@ -18,7 +18,7 @@ select,
 textarea {
     max-width: 400px;
     background-color: #b7e4c7;
-    color: red;
+    color: darkslateblue;
 }
 
 .navbar-inverse .navbar-toggle:hover,
@@ -26,6 +26,4 @@ textarea {
     background-color: #95d5b2;
     border-color: blueviolet;
 }
- p {
-     color: red;
- }
+

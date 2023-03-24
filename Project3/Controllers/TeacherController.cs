@@ -12,27 +12,22 @@ namespace Project3.Controllers
     public class TeacherController : Controller
     {
 
-
-        // GET: Teacher
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         /// <summary>
-        /// Returns a dynamic rendered page of a list of all teachers from a database
-        /// The teacher list is a list of links that you can click on that will take you to another page for more detail of that teacher
+        /// Returns a dynamically rendered page of a list of all teachers from a database
+        /// The teacher list is a list of links that you can click on that will take you to another page for more detail about that teacher
         /// </summary>
         /// <param name="SearchKey"></param>
         /// <example>Alexander</example>
         /// <returns>Alexander Bennett</returns>
-        //GET : /Teacher/List
+        //GET : /Teacher/List/{SearchKey}
         public ActionResult List(string SearchKey = null)
         {
             TeacherDataController controller = new TeacherDataController();
             IEnumerable<Teacher> Teachers = controller.ListTeachers(SearchKey);
             return View(Teachers);
         }
+
+
 
         /// <summary>
         /// Returns an dynamically rendered feature page of a particular teacher that was clicked on
