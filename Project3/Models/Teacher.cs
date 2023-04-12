@@ -14,6 +14,7 @@ namespace Project3.Models
         public string TeacherLname;
         public decimal TeacherSalary;
         public DateTime TeacherHireDate;
+        // image?
    
     }
 

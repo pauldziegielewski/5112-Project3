@@ -8,18 +8,20 @@
 
 <h2>Here is information about a teacher</h2>
 
-<a class="nav" href="/Teacher/List"> &larr; back to Teachers</a>
+
+<nav>
+    <a class="nav" href="/Teacher/List"> &larr; back to Teachers</a>
+    <a class="delete" href="/Teacher/ConfirmDelete/@Model.TeacherId">Delete</a>
+</nav>
+
 
 <div id="display-container">
 
     <h2>@Model.TeacherFname @Model.TeacherLname </h2>
 
-
     <p>Salary:<span> $@Model.TeacherSalary </span></p>
 
     <p>Hire Date:<span> @Model.TeacherHireDate </span></p>
-
-
 
 </div>
 
@@ -55,6 +57,21 @@
         font-weight: bold;
         color: #1b4332;
     }
+       
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .delete {
+        text-align: right;
+ 
+        float: right;
+        color: #dd1111;
+    }
+
+
  
 
 </style>

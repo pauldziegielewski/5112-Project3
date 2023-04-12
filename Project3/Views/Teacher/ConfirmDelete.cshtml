@@ -1,0 +1,60 @@
+﻿
+@model Project3.Models.Teacher
+
+@{
+    ViewBag.Title = "ConfirmDelete";
+}
+
+<div class="confirm-heading">
+<h2>Are you sure you want to delete <span class="bold">@Model.TeacherFname @Model.TeacherLname?</span> </h2>
+<p>This action cannot be undone</p>
+    </div>
+
+
+<form class="deleteTeacher" method="POST" action="/Teacher/Delete/@Model.TeacherId">
+    <a class="cancel-btn" href="/Teacher/Show/@Model.TeacherId">Cancel</a>
+    <button class="delete-btn" href="/Teacher/ConfirmDelete/@Model.TeacherId">Confirm Delete</button>
+</form>
+
+
+<style>
+
+    .confirm-heading {
+        display: flex;
+       justify-content: center;
+       margin-top: 60px;
+       flex-direction: column;
+       align-items: center;
+    }
+    .delete-btn {
+        background-color: red;
+        color: white;
+        border-radius: 8px;
+        border: none;
+        padding: 6px 10px;
+    }
+    .bold {
+        font-size: 20px;
+        font-weight: 500;
+    }
+
+    .cancel-btn {
+        background-color: blue;
+        color: white;
+        border-radius: 8px;
+        border: none;
+        padding: 6px 10px;
+    }
+
+    .deleteTeacher {
+        display: flex;
+        gap: 40px;
+        margin-top: 40px;
+        justify-content: center;
+       
+    }
+
+    p {
+        font-size: 20px;
+    }
+</style>
