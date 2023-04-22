@@ -63,7 +63,7 @@ namespace Project3.Controllers
                 // The code below grants access to teacher columns as an index
                 int TeacherId = (int)ResultSet["teacherid"];
                 string TeacherFname = (string)ResultSet["teacherfname"];
-                string TeacherLname = (string)ResultSet["teacherlname"];
+                string TeacherLname = ResultSet["teacherlname"].ToString();
                 decimal TeacherSalary = (decimal)ResultSet["salary"];
                 DateTime TeacherHireDate = (DateTime)ResultSet["hiredate"];
 
@@ -123,7 +123,7 @@ namespace Project3.Controllers
             {
                 int TeacherId = (int)ResultSet["teacherid"];
                 string TeacherFname = (string)ResultSet["teacherfname"];
-                string TeacherLname = (string)ResultSet["teacherlname"];
+                string TeacherLname = (string)ResultSet["teacherlname"].ToString();
                 decimal TeacherSalary = (decimal)ResultSet["salary"];
                 DateTime TeacherHireDate = (DateTime)ResultSet["hiredate"];
 
@@ -276,6 +276,54 @@ namespace Project3.Controllers
         public string test()
         {
             return "this is a post test";
+        }
+
+
+
+        /// <summary>
+        /// This method updates a teacher in the MySql database. 
+        /// </summary>
+        /// <param name="TeacherInfo">An object with fields that maps to the teacher's table</param>Id of the teacher to be updated
+        /// <param name="TeacherFname"></param>Id of the teacher to be updated
+        /// <param name="TeacherLname"></param>First name of the teacher to be updated
+        /// <param name="TeacherSalary"></param>Salary of the teacher to be updated
+        /// <param name="TeacherHireDate"></param>Hire date of the teacher to be updated
+        /// <returns>A dynamic page which provides the current info on a teacher</returns>
+        /// <example>POST: api/TeacherData/UpdateTeacher/12
+        /// FORM DATA / POST DATA / REQUEST BODY
+        /// {
+        /// "TeacherFname":"Grace",
+        /// "TeacherLname":"Adler",
+        /// "TeacherSalary": 65,
+        /// "TeacherHireDate": 2000-04-22
+        /// }
+        /// </example>
+        /// 
+        public void UpdateTeacher(int id, [FromBody]Teacher TeacherInfo)
+        {
+            //Store blog database connection into Conn
+            MySqlConnection Conn = Blog.AccessDatabase();
+
+            // Open Conn
+            Conn.Open();
+
+            // attach a command method to Conn and store it into cmd
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            //SQL QUERY
+            cmd.CommandText = "UPDATE teachers set teacherfname=@TeacherFname, teacherlname=@TeacherLname, salary=@TeacherSalary, hiredate=@TeacherHireDate where teacherid=@TeacherId";
+
+            cmd.Parameters.AddWithValue("@TeacherFname", TeacherInfo.TeacherFname);
+            cmd.Parameters.AddWithValue("@TeacherLname", TeacherInfo.TeacherLname);
+            cmd.Parameters.AddWithValue("@TeacherSalary", TeacherInfo.TeacherSalary);
+            cmd.Parameters.AddWithValue("@TeacherHireDate", TeacherInfo.TeacherHireDate);
+            cmd.Parameters.AddWithValue("@TeacherId", id);
+
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
         }
 
     }

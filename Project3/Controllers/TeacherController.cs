@@ -47,10 +47,10 @@ namespace Project3.Controllers
         public ActionResult Show(int id)
         {
             TeacherDataController controller = new TeacherDataController();
-            Teacher NewTeacher = controller.FindTeacher(id);
+            Teacher SelectedTeacher = controller.FindTeacher(id);
        
 
-            return View(NewTeacher);
+            return View(SelectedTeacher);
         }
 
 
@@ -137,6 +137,57 @@ namespace Project3.Controllers
           
             return RedirectToAction("List");
 
+        }
+
+        /// <summary>
+        /// Routes to a dynamically generated "Teacher Update" page. Gathers information from the database.
+        /// </summary>
+        /// <param name="id">Id of the Teacher</param>
+        /// <returns>A dyanmic "update teacher" page which provides the current information of the teacher and asks the user for new information as part of the form</returns>
+        /// <example>GET: /Teacher/Update/{id}</example>
+      
+        public ActionResult Update(int id)
+        {
+            TeacherDataController controller = new TeacherDataController();
+            Teacher SelectedTeacher = controller.FindTeacher(id);
+
+            return View(SelectedTeacher);
+        }
+
+
+        /// <summary>
+        /// Receives a POST request containing information      about an exisiting teacher. Conveys this information     to the API, and redirects to the "Show" page of         updated teacher
+        /// </summary>
+        /// <param name="id"></param>Id of the teacher to be    updated
+        /// <param name="TeacherFname"></param>Id of the        teacher to be updated
+        /// <param name="TeacherLname"></param>First name of    the teacher to be updated
+        /// <param name="TeacherSalary"></param>Salary of the   teacher to be updated
+        /// <param name="TeacherHireDate"></param>Hire date of  the teacher to be updated
+        /// <returns>A dynamic page which provides the current  info on a teacher</returns>
+        /// <example>POST: /Teacher/Update/21
+        /// FORM DATA / POST DATA / REQUEST BODY
+        /// {
+        /// "TeacherFname":"Oprah",
+        /// "TeacherLname":"Winfrey",
+        /// "TeacherSalary": 65,
+        /// "TeacherHireDate": 2000-04-22
+        /// }
+        /// </example>
+        /// 
+        [HttpPost]
+        //POST: /Teacher/Update/{id}
+        public ActionResult Update(int id, string TeacherFname, string TeacherLname, decimal TeacherSalary, DateTime TeacherHireDate)
+        {
+            Teacher TeacherInfo = new Teacher();
+
+            TeacherInfo.TeacherFname = TeacherFname;
+            TeacherInfo.TeacherLname = TeacherLname;
+            TeacherInfo.TeacherSalary = TeacherSalary;
+            TeacherInfo.TeacherHireDate = TeacherHireDate;
+
+            TeacherDataController controller = new TeacherDataController();
+            controller.UpdateTeacher(id, TeacherInfo);
+            return RedirectToAction("Show/" + id);
         }
 
 
